@@ -1,7 +1,7 @@
 # slack-me
 The module helps to send messages to configured slack webhook URL.
 
-##How to configure and send messages
+## How to configure and send messages
 
 1) Configure the SlackMeConfig
 
