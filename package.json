@@ -1,0 +1,28 @@
+{
+  "name": "slack-me",
+  "version": "1.0.0",
+  "description": "App to send messages to slack",
+  "main": "slack-me.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shreyasvimal/slack-me.git"
+  },
+  "keywords": [
+    "Slack",
+    "Message",
+    "Send"
+  ],
+  "author": "Vimal Mohan <shreyas.vimal@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shreyasvimal/slack-me/issues"
+  },
+  "homepage": "https://github.com/shreyasvimal/slack-me#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "request": "^2.83.0"
+  }
+}
