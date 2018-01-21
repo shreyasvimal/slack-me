@@ -1,6 +1,6 @@
 var request = require('request'),
     _ = require('lodash'),
-    SlackConfig = require('./slack-me.config').SlackMeConfig;
+    SlackConfig = require('./slack-me.config');
 
 module.exports = function(options) {
 

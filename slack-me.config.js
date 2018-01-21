@@ -1,31 +1,5 @@
 var _ = require('lodash');
 
-var RichTextFields = function() {
-    var title,
-        value,
-        short = false;
-
-    RichTextFields.prototype.get = function() {
-        var data = {};
-        if( !_.isEmpty(title)) { _.assign(data, {"title" : title}); }
-        if( !_.isEmpty(value)) { _.assign(data, {"value" : value}); }
-        if( short ) { _.assign(data, {"short" : short}); }
-        return data;
-    }
-
-    RichTextFields.prototype.setTitle = function(value) {
-        title = value;
-    }
-
-    RichTextFields.prototype.setValue = function(val) {
-        value = val;
-    }
-
-    RichTextFields.prototype.isShortText = function(value) {
-        short = value;
-    }
-}
-
 var RichText = function() {
     var fallBack,
         preText,
@@ -47,22 +21,32 @@ var RichText = function() {
         return data;
     }
 
-    RichText.prototype.addFields = function(value) {
-        if( value instanceof RichTextFields) {
-            fields.push(value.get());
-        }
+    RichText.prototype.addFields = function(title, value, isShort) {
+        var data = {
+            "title" : title,
+            "value" : value
+        };
+        if( !isShort && value && value.length > 25 ) {
+            isShort = false;
+        } 
+        _.assign(data, {"short" : isShort });
+        fields.push(data);
+        return this;
     }
 
     RichText.prototype.setColor = function(value) {
         color = value;
+        return this;
     }
 
     RichText.prototype.setPretext = function(value) {
         preText = value;
+        return this;
     }
 
     RichText.prototype.setFallback = function(value) {
         fallBack = value;
+        return this;
     }
 };
 
@@ -102,7 +86,7 @@ var SlackMeConfig = function(options) {
             if( !_.isEmpty(richText)) { 
                 var attachments = [];
                 for(var count = 0; count < richText.length; count++) {
-                    attachments.push(richText[count]);
+                    attachments.push(richText[count].get());
                 }
                 _.assign(data, {"attachments" : attachments});
             }
@@ -110,37 +94,44 @@ var SlackMeConfig = function(options) {
         }
     }
 
-    SlackMeConfig.prototype.addRichText = function(value) {
-        if( value instanceof RichText) {
-            richText.push(value.get());
-        }
+    SlackMeConfig.prototype.addRichText = function(color, title, fallbackText) {
+        var rText = new RichText();
+        rText.setColor(color);
+        rText.setPretext(title);
+        rText.setFallback(fallbackText);
+        richText.push(rText);
+        return rText;
     }
 
     SlackMeConfig.prototype.setIconEmoji = function(value) {
         icon_emoji = value;
+        return this;
     }
 
     SlackMeConfig.prototype.setIconUrl = function(value) {
         icon_url = value;
+        return this;
     }
 
     SlackMeConfig.prototype.setChannel = function(value) {
         channel = value;
+        return this;
     }
 
     SlackMeConfig.prototype.setWebhook = function(value) {
         webhook = value;
+        return this;
     }
     
     SlackMeConfig.prototype.setUsername = function(value) {
         username = value;
+        return this;
     }
     
     SlackMeConfig.prototype.setText = function(value) {
         text = value;
+        return this;
     }
 };
 
-module.exports.SlackMeConfig = SlackMeConfig;
-module.exports.SlackMeRichText = RichText;
-module.exports.SlackMeRichTextFields = RichTextFields;
+module.exports = SlackMeConfig;
