@@ -3,7 +3,7 @@ var SlackConfig = require('./slack-me.config');
 
 var config = new SlackConfig();
 
-config.setWebhook("https://hooks.slack.com/services/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")
+config.setWebhook("WEBHOOK_URL")
     .setUsername("Slack Me!!!")
     .setText('Configuration for the last time')
     .setChannel('#test')
